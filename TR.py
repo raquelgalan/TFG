@@ -1,8 +1,9 @@
 # TFG Raquel Galán Montes
-## Cálculo del Tiempo de Reverberación UNE-EN ISO 3382-2:2008
+## Cálculo del Tiempo de Reverberación UNE-EN ISO 16283-1
 
 from openpyxl import load_workbook      # Para leer ficheros .xlsx
 import math                             # Para usar funciones matemáticas
+from pylab import *                     # Para crear gráficas
 
 # VARIABLES GLOBALES
 SHEET = 'TR'        # Hoja del archivo XLSX
@@ -12,12 +13,16 @@ FILE_TR = 'RT.xlsx'     # Variable para un segundo fichero (TR)
 ## Rango de frecuencias de interes:
 arrayFR = [50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000]
 
+## RANGO DE FRECUENCIAS
+FR = ['50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250', '1600', '2000','2500', '3150', '4000', '5000']
+
+
 # Arrays vacíos
 TR = []           # Array para los resultados del tiempo de reverberación de la habitación
 TR_F1 = []        # Array para los resultados del tiempo de reverberación en la Posición 1 de la Fuente
 TR_F2 = []        # Array para los resultados del tiempo de reverberación en la Posición 2 de la Fuente
 
-# Cálculo del tiempo de reverberación TR20 para cada banda de frecuencia:
+# Cálculo del tiempo de reverberación TR60 para cada banda de frecuencia:
 def Calcular_TR(A, B, C, D, myArray):
     wb = load_workbook(FILE_TR)        # Se carga en wb el fichero
     sheet = wb[SHEET]                  # Se carga la hoja del fichero de donde obtenemos los datos
@@ -51,6 +56,17 @@ def Imprimir(myArray, unidades):
         print(arrayFR[i], 'Hz - ', myArray[i], 's')  # Se imprime por la terminal el elemento i del array
         i = i + 1                                     # Siguiente elemento
 
+# Datos mostrados en una gráfica
+def representacion(A):
+    title(A)
+    xlabel('Frecuencia [Hz]')
+    ylabel('Tiempo[s]')
+    ylim(0, 1.5)
+    legend(('TR60'),
+    loc='upper right', facecolor="w", prop = {'size': 15})
+    grid()
+
+
 # Se imprimen todos los datos
 if __name__ == "__main__":
 
@@ -78,3 +94,11 @@ if __name__ == "__main__":
     print('------------------------')
     TR_Habitación(TR_F1, TR_F2, TR)
     Imprimir(TR, 's')
+
+
+    #REPRESENTACIÓN DEL TR
+    figure('TR60')
+    plot(FR, TR, 'ro-')        # Genera el gráfico
+    representacion('Tiempo de reverberación en la sala receptora')
+
+    show()
