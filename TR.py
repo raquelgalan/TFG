@@ -36,24 +36,45 @@ def Calcular_TR(A, B, C, D, myArray):
         RT = RT/n                       # TR promedio para la frecuencia x
         myArray.append(round(RT,2))     # Array ordenado de datos
 
+# Se calcula el TR promedio de la habitación, donde A: TR_F1 y B: TR_F2
+def TR_Habitación(A, B, myArray):
+    i = 0   
+    for num in A:
+        TR = (A[i] + B[i])/2
+        i = i + 1 
+        myArray.append(round(TR,1))          # Array ordenado de datos
+
 # Se preparan los resultados para imprimirlos por pantalla
 def Imprimir(myArray, unidades):
     i = 0                                             # Iterador para los arrays
     for num in arrayFR:
-        print(arrayFR[i], 'Hz - ', myArray[i], unidades)  # Se imprime por la terminal el elemento i del array
+        print(arrayFR[i], 'Hz - ', myArray[i], 's')  # Se imprime por la terminal el elemento i del array
         i = i + 1                                     # Siguiente elemento
 
 # Se imprimen todos los datos
 if __name__ == "__main__":
 
     print()
-    print('TR | POSICIÓN FUENTE 1')
+    print('POSICIÓN FUENTE 1')
+    print('------------------------')
+    print('Frecuencia | TR')
     print('------------------------')
     Calcular_TR(6, 26, 12, 15, TR_F1) # Imprime los valores desde de las filas 6-26 y de las columnas L-O
     Imprimir(TR_F1, 's')
 
     print()
-    print('TR | POSICIÓN FUENTE 2')
+    print('POSICIÓN FUENTE 2')
+    print('------------------------')
+    print('Frecuencia | TR')
     print('------------------------')
     Calcular_TR(6, 26, 19, 22, TR_F2) # Imprime los valores desde de las filas 6-26 y de las columnas S-V
     Imprimir(TR_F2, 's')
+
+
+    print()
+    print('HABITACIÓN')
+    print('------------------------')
+    print('Frecuencia | TR')
+    print('------------------------')
+    TR_Habitación(TR_F1, TR_F2, TR)
+    Imprimir(TR, 's')
