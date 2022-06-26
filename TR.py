@@ -22,7 +22,7 @@ TR = []           # Array para los resultados del tiempo de reverberación de la
 TR_F1 = []        # Array para los resultados del tiempo de reverberación en la Posición 1 de la Fuente
 TR_F2 = []        # Array para los resultados del tiempo de reverberación en la Posición 2 de la Fuente
 
-# Cálculo del tiempo de reverberación TR60 para cada banda de frecuencia:
+# Cálculo del tiempo de reverberación TR20 para cada banda de frecuencia:
 def Calcular_TR(A, B, C, D, myArray):
     wb = load_workbook(FILE_TR)        # Se carga en wb el fichero
     sheet = wb[SHEET]                  # Se carga la hoja del fichero de donde obtenemos los datos
@@ -62,7 +62,7 @@ def representacion(A):
     xlabel('Frecuencia [Hz]')
     ylabel('Tiempo[s]')
     ylim(0, 1.5)
-    legend(('TR60'),
+    legend(('TR20'),
     loc='upper right', facecolor="w", prop = {'size': 15})
     grid()
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
 
     #REPRESENTACIÓN DEL TR
-    figure('TR60')
+    figure('TR20')
     plot(FR, TR, 'ro-')        # Genera el gráfico
     representacion('Tiempo de reverberación en la sala receptora')
 
