@@ -27,8 +27,8 @@ LpRF = []
 LpE_Inf_F1 = []           # Array para los resultados del nivel de presión en emisión , LpE-Inf
 LpE_Inf_F2 = []           # Array para los resultados del nivel de presión en emisión , LpE-Inf
 TR = []                # Array para los resultados del tiempo de reverberación en recepción, TR
-DnT_A1 = []            # Array para los resultados del nivel de diferencia normalizada, DnT-A1
-DnT_A2 = []            # Array para los resultados del nivel de diferencia normalizada, DnT-A2
+DnT_F1 = []            # Array para los resultados del nivel de diferencia normalizada, DnT-A1
+DnT_F2 = []            # Array para los resultados del nivel de diferencia normalizada, DnT-A2
 myDnT = []             # Array para los resultados del nivel de diferencia normalizada global, DnT
 R_A1 = []              # Array para los resultados del índice de reducción sonora aparente, R'- A1
 R_A2 = []              # Array para los resultados del índice de reducción sonora aparente, R'- A2
@@ -72,7 +72,15 @@ def LpCorregido(A, B, myArray):
             myArray.append(round(corregido_mayor,1))
             i = i + 1
 
-
+# Cálculo de la diferencia normalizada para cada banda de frecuencia, DnT:
+# donde A representa el Lp en el recinto EMISOR y B el Lp en el recinto RECEPTOR.
+def diferencia_Nivel(A, B, TR, myArray):
+    i = 0
+    for num in A:
+        diferencia = A[i] - B[i]
+        DnT = diferencia + (10*math.log(TR[i]/T,10))  
+        i = i + 1
+        myArray.append(round(DnT,1))
 
 # Cálculo del sumatorio de las magnitudes en función de la posición de altavoz:
 # donde A y B son los resultados por cada posición de altavoz respectivamente para cada banda de frecuencias.
@@ -86,7 +94,7 @@ def toSum(A, B, myArray):
 
 
 # Se preparan los resultados para imprimirlos por pantalla
-def Imprimir(myArray, unidades):
+def resultados(myArray, unidades):
     i = 0                                             # Iterador para los arrays
     for num in arrayFR:
         print(arrayFR[i], 'Hz - ', myArray[i], 'dB')  # Se imprime por la terminal el elemento i del array
@@ -100,7 +108,7 @@ if __name__ == "__main__":
     print('Frecuencia | Lp Hab. Inferior')
     print('------------------------------------------------------')
     Calcular_Lp(113, 133, 4, 8, 5, LpR_Inf_F1)
-    Imprimir(LpR_Inf_F1, 'dB')
+    resultados(LpR_Inf_F1, 'dB')
 
     print()
     print('NIVELES EN RECEPCIÓN HABITACIÓN INFERIOR - FUENTE 2')
@@ -108,13 +116,13 @@ if __name__ == "__main__":
     print('Frecuencia | Lp Hab. Inferior')
     print('-------------------------------------------------------')
     Calcular_Lp(113, 133, 9, 13, 5, LpR_Inf_F2)
-    Imprimir(LpR_Inf_F2, 'dB')
+    resultados(LpR_Inf_F2, 'dB')
     
     print()
     print('RUIDO DE FONDO EN HABITACIÓN INFERIOR')
     print('----------------------------------------')
     Calcular_Lp(139, 159, 8, 8, 1, LpRF)
-    Imprimir(LpRF, 'dB')
+    resultados(LpRF, 'dB')
 
     print()
     print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN INFERIOR - FUENTE 1')
@@ -122,7 +130,7 @@ if __name__ == "__main__":
     print('Frecuencia | Lp Corregido Hab. Inferior')
     print('------------------------------------------------------------------')
     LpCorregido(LpR_Inf_F1, LpRF, LpRC_Inf_F1)
-    Imprimir(LpRC_Inf_F1, 'dB')
+    resultados(LpRC_Inf_F1, 'dB')
 
     print()
     print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN INFERIOR - FUENTE 2')
@@ -130,20 +138,46 @@ if __name__ == "__main__":
     print('Frecuencia | Lp Corregido Hab. Inferior')
     print('-------------------------------------------------------------------')
     LpCorregido(LpR_Inf_F2, LpRF, LpRC_Inf_F2)
-    Imprimir(LpRC_Inf_F2, 'dB')
+    resultados(LpRC_Inf_F2, 'dB')
 
     print()
     print('NIVELES EN EMISIÓN HABITACIÓN INFERIOR - FUENTE 1')
     print('---------------------------------------------------')
     print('Frecuencia | Lp Hab. Inferior')
     print('---------------------------------------------------')
-    Calcular_Lp(113, 133, 18, 20, 3, LpE_Inf_F1)
-    Imprimir(LpE_Inf_F1, 'dB')
+    Calcular_Lp(113, 133, 17, 19, 3, LpE_Inf_F1)
+    resultados(LpE_Inf_F1, 'dB')
 
     print()
     print('NIVELES EN EMISIÓN HABITACIÓN INFERIOR - FUENTE 2')
     print('---------------------------------------------------')
     print('Frecuencia | Lp Hab. Inferior')
     print('---------------------------------------------------')
-    Calcular_Lp(113, 133, 21, 23, 3, LpE_Inf_F2)
-    Imprimir(LpE_Inf_F2, 'dB')
+    Calcular_Lp(113, 133, 20, 22, 3, LpE_Inf_F2)
+    resultados(LpE_Inf_F2, 'dB')
+
+    print()
+    print('HABITACIÓN')
+    print('------------------------')
+    print('Frecuencia | TR')
+    print('------------------------')
+    Calcular_TR(6, 26, 12, 15, TR_F1)
+    Calcular_TR(6, 26, 19, 22, TR_F2)
+    TR_Habitación(TR_F1, TR_F2, TR)
+    Imprimir(TR, 's')
+
+    print()
+    print('DIFERENCIA DE NIVEL - HABITACIÓN INFERIOR - FUENTE 1')
+    print('------------------------------------------------------------------')
+    print('Frecuencia | DnT1 Hab. Inferior')
+    print('------------------------------------------------------------------')
+    diferencia_Nivel(LpE_Inf_F1, LpRC_Inf_F1,TR, DnT_F1)
+    Imprimir(DnT_F1, 'dB')
+
+    print()
+    print('DIFERENCIA DE NIVEL - HABITACIÓN INFERIOR - FUENTE 2')
+    print('-------------------------------------------------------------------')
+    print('Frecuencia | DnT2 Hab. Inferior')
+    print('-------------------------------------------------------------------')
+    diferencia_Nivel(LpE_Inf_F2, LpRC_Inf_F2, TR, DnT_F2)
+    Imprimir(DnT_F2, 'dB')
