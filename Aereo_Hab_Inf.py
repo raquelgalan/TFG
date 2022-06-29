@@ -13,7 +13,7 @@ FILE  = 'Ruido_Aereo.xlsx'      # Variable para el fichero principal
 T = 0.5                         # Tiempo de referencia = 0.5s
 V = 23.4                        # Volumen del recinto receptor (V = largo x ancho x alto = 4.5 x 2.08 x 2.5 m^3)
 S = 9.36                        # Superficie del elemento separador (S = suelo = largo x ancho = 4.5 x 2.08 m^2)
-C = 0.161                       # Constante para hallar Abs, la superficie de absorción equivalente
+C = 0.16                        # Constante para hallar Abs, la superficie de absorción equivalente
 
 # Rango de frecuencias de interes:
 arrayFR = [50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000]
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------')
     print('Frecuencia | DnT1 Hab. Inferior')
     print('------------------------------------------------------------------')
-    Diferencia_Nivel(LpE_Inf_F1, LpRC_Inf_F1,TR, DnT_F1)
+    Diferencia_Nivel(LpE_Inf_F1, LpRC_Inf_F1, TR, DnT_F1)
     Resultados(DnT_F1, 'dB')
 
     print()
