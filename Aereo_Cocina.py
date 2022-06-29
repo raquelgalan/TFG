@@ -12,7 +12,7 @@ SHEET = 'Datos'                 # Hoja del archivo XLSX
 FILE  = 'Ruido_Aereo.xlsx'      # Variable para el fichero principal
 T = 0.5                         # Tiempo de referencia = 0.5s
 V = 23.4                        # Volumen del recinto receptor (V = largo x ancho x alto = 4.5 x 2.08 x 2.5 m^3)
-S = 11.25                       # Superficie del elemento separador (S = pared_derecha = largo x alto = 4.5 x 2.5 m^2)
+S = 11.25                       # Superficie del elemento separador (S = pared_izquierda = largo x alto = 4.5 x 2.5 m^2)
 C = 0.16                        # Constante para hallar Abs, la superficie de absorción equivalente
 
 # Rango de frecuencias de interes:
