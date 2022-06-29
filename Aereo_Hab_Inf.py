@@ -1,6 +1,6 @@
 # TFG Raquel Galán Montes
 ## Cálculo del Aislamiento a Ruido Aéreo  UNE-EN ISO 16283-1:2015 ISO 717-1:2013
-### HABITACIÓN SUPERIOR
+### HABITACIÓN INFERIOR
 
 from openpyxl import load_workbook      # Nos permite leer de ficheros .xlsx
 import math                             # Nos permite usar funciones matemáticas
