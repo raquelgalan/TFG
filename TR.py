@@ -1,5 +1,5 @@
 # TFG Raquel Galán Montes
-## Cálculo del Tiempo de Reverberación UNE-EN ISO 16283-1
+## Cálculo del Tiempo de Reverberación UNE-EN ISO 3382-2:2008
 
 from openpyxl import load_workbook      # Para leer ficheros .xlsx
 import math                             # Para usar funciones matemáticas
@@ -57,7 +57,7 @@ def Imprimir(myArray, unidades):
         i = i + 1                                     # Siguiente elemento
 
 # Datos mostrados en una gráfica
-def representacion(A):
+def Representacion(A):
     title(A)
     xlabel('Frecuencia [Hz]')
     ylabel('Tiempo[s]')
@@ -99,6 +99,6 @@ if __name__ == "__main__":
     #REPRESENTACIÓN DEL TR
     figure('TR20')
     plot(FR, TR, 'ro-')        # Genera el gráfico
-    representacion('Tiempo de reverberación en la sala receptora')
+    Representacion('Tiempo de reverberación en la sala receptora')
 
     show()
