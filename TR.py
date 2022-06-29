@@ -7,7 +7,7 @@ from pylab import *                     # Para crear gráficas
 
 # VARIABLES GLOBALES
 SHEET = 'TR'        # Hoja del archivo XLSX
-FILE_TR = 'RT.xlsx'     # Variable para un segundo fichero (TR)
+FILE_TR = 'RT.xlsx'     # Variable para el fichero (TR)
 
 # ARRAY con constantes
 ## Rango de frecuencias de interes:
@@ -47,7 +47,7 @@ def TR_Habitación(A, B, myArray):
     for num in A:
         TR = (A[i] + B[i])/2
         i = i + 1 
-        myArray.append(round(TR,1))          # Array ordenado de datos
+        myArray.append(round(TR,2))          # Array ordenado de datos
 
 # Se preparan los resultados para imprimirlos por pantalla
 def Imprimir(myArray, unidades):
