@@ -48,6 +48,26 @@ def Calcular_L(A, B, C, D, n, myArray):
         L = 10*math.log(L/n,(10))           # Se calcula el promedio logarítmico de la suma total
         myArray.append(round(L,1))          # Array ordenado de datos                 
 
+# Corrección del ruido de fondo:
+def LCorregido(A, B, myArray):
+    i = 0
+    h = 10
+    l = 6
+    correccion = 1.3
+    for num in A:
+        dif = A[i] - B[i]
+        if dif >= h:
+            corregido = A[i]
+            myArray.append(round(corregido,2))
+            i = i + 1
+        elif dif <= l:
+            corregido_menor = A[i] - correccion
+            myArray.append(round(corregido_menor,2))
+            i = i + 1
+        else:
+            corregido_mayor = (10*math.log(10**(A[i]/10)-10**(B[i]/10),10))  
+            myArray.append(round(corregido_mayor,1))
+            i = i + 1
 
 # Se preparan los resultados para imprimirlos por pantalla
 def Valores(myArray, unidades):
@@ -108,33 +128,33 @@ if __name__ == "__main__":
     Valores(LpRF4, 'dB')
 
     print()
-    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN')
-    print('---------------------------------------------')
+    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN | POSICIÓN 1 DE LA FUENTE')
+    print('------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('-------------------------------------')
-    LpCorregido(LpR_F1, LpRF, LpRC_F1)
-    Resultados(LpRC_F1, 'dB')
+    LCorregido(L_Impacto_F1, LpRF1, LpRC_F1)
+    Valores(LpRC_F1, 'dB')
 
     print()
-    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN')
-    print('----------------------------------------------')
+    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN | POSICIÓN 2 DE LA FUENTE')
+    print('-------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('--------------------------------------')
-    LpCorregido(LpR_F2, LpRF, LpRC_F2)
-    Resultados(LpRC_F2, 'dB')
-
-        print()
-    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN')
-    print('----------------------------------------------')
-    print('Frecuencia | Lp Corregido Habitación')
-    print('--------------------------------------')
-    LpCorregido(LpR_F3, LpRF, LpRC_F3)
-    Resultados(LpRC_F3, 'dB')
+    LCorregido(L_Impacto_F2, LpRF2, LpRC_F2)
+    Valores(LpRC_F2, 'dB')
 
     print()
-    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN')
-    print('----------------------------------------------')
+    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN | POSICIÓN 3 DE LA FUENTE')
+    print('-------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('--------------------------------------')
-    LpCorregido(LpR_F4, LpRF, LpRC_F4)
-    Resultados(LpRC_F4, 'dB')
+    LCorregido(L_Impacto_F3, LpRF3, LpRC_F3)
+    Valores(LpRC_F3, 'dB')
+
+    print()
+    print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN | POSICIÓN 4 DE LA FUENTE')
+    print('------------------------------------------------------------------------')
+    print('Frecuencia | Lp Corregido Habitación')
+    print('--------------------------------------')
+    LCorregido(L_Impacto_F4, LpRF4, LpRC_F4)
+    Valores(LpRC_F4, 'dB')
