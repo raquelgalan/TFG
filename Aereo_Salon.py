@@ -2,10 +2,10 @@
 ## Cálculo del Aislamiento a Ruido Aéreo  UNE-EN ISO 16283-1:2015 ISO 717-1:2013
 ### SALÓN, SALA COLINDANTE LATERAL CON DIVISIÓN VERTICAL
 
-from openpyxl import load_workbook      # Nos permite leer de ficheros .xlsx
-import math                             # Nos permite usar funciones matemáticas
-from pylab import *                     # Nos permite crear gráficas
-from TR import *                        # Importamos el TR del programa
+from openpyxl import load_workbook      # Permite leer de ficheros .xlsx
+import math                             # Permite usar funciones matemáticas
+from pylab import *                     # Permite crear gráficas
+from TR import *                        # Se importa el TR del programa
 
 # VARIABLES GLOBALES
 SHEET = 'Datos'                 # Hoja del archivo XLSX
@@ -23,23 +23,23 @@ LpR_Salon_F1 = []           # Array para los resultados del nivel de presión en
 LpR_Salon_F2 = []           # Array para los resultados del nivel de presión en recepción
 LpRC_Salon_F1 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
 LpRC_Salon_F2 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
-LpRF = []                 # Array para los resultados del nivel de presión del ruido de fondo
+LpRF = []                   # Array para los resultados del nivel de presión del ruido de fondo
 LpE_Salon_F1 = []           # Array para los resultados del nivel de presión en emisión de la fuente en la posición 1
 LpE_Salon_F2 = []           # Array para los resultados del nivel de presión en emisión de la fuente en posición 2
-TR = []                   # Array para los resultados del tiempo de reverberación en recepción
-DnT_F1 = []               # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
-DnT_F2 = []               # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
-DnT = []                  # Array para los resultados del nivel de diferencia normalizada global estandarizada
-R_F1 = []                 # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
-R_F2 = []                 # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
-R = []                    # Array para los resultados del índice de reducción sonora aparente global, R'
+TR = []                     # Array para los resultados del tiempo de reverberación en recepción
+DnT_F1 = []                 # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
+DnT_F2 = []                 # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
+DnT = []                    # Array para los resultados del nivel de diferencia normalizada global estandarizada
+R_F1 = []                   # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
+R_F2 = []                   # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
+R = []                      # Array para los resultados del índice de reducción sonora aparente global, R'
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-1
 # Cálculo del promedio de posiciones de micrófono para cada banda de frecuencia, Lp, donde
 # A: min_row; B: max_row; C: min_col; D: max_col; n: posiciones de micrófono
 def Calcular_Lp(A, B, C, D, n, myArray):
-    wb = load_workbook(FILE)        # Cargamos en wb el fichero
-    sheet = wb[SHEET]               # Cargamos la hoja del fichero de donde obtenemos los datos
+    wb = load_workbook(FILE)        # Se carga en wb el fichero
+    sheet = wb[SHEET]               # Se carga la hoja del fichero de donde obtenemos los datos
 
     for value in sheet.iter_rows(min_row = A, max_row = B, min_col = C, max_col = D,
                                  values_only= True):
@@ -88,7 +88,7 @@ def Sumatorio(A, B, myArray):
     i = 0
     for num in A:
         sum = 10**(-A[i]/10) + 10**(-B[i]/10)
-        X = -10*math.log(sum/2,(10))                # Se dividimos entre 2, que son el número de posiciones de altavoz
+        X = -10*math.log(sum/2,(10))                # Se divide entre 2, que son el número de posiciones de altavoz
         i = i + 1
         myArray.append(round(X,1))
 
@@ -105,7 +105,7 @@ def Resultados(myArray, unidades):
 def Calcular_R(A, B, TR, myArray):
     i = 0
     for num in A:
-        Abs = (C * V)/TR[i]                           # Calculo de la superficie de absorción equivalente
+        Abs = (C * V)/TR[i]                           # Cálculo de la superficie de absorción equivalente
         R = (A[i]-B[i]) + 10*math.log(S/Abs,(10))
         i = i + 1
         myArray.append(round(R,1))
@@ -235,9 +235,9 @@ if __name__ == "__main__":
 
     #REPRESENTACIÓN DE R
     figure("R' Salón")
-    plot(FR, R, 'ro-')        # Genera el gráfico
+    plot(FR, R, 'ro-')          # Genera el gráfico
     Representacion_Nivel('Índice de reducción sonora aparente', ("R'"))
 
 
-    tight_layout()          # Permite ajustar la leyenda fuera del gráfico
+    tight_layout()              # Permite ajustar la leyenda del gráfico
     show()
