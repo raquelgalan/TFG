@@ -1,13 +1,13 @@
 # TFG Raquel Galán Montes
 ## Cálculo del Tiempo de Reverberación UNE-EN ISO 3382-2:2008
 
-from openpyxl import load_workbook      # Para leer ficheros .xlsx
-import math                             # Para usar funciones matemáticas
-from pylab import *                     # Para crear gráficas
+from openpyxl import load_workbook      # Permite leer ficheros .xlsx
+import math                             # Permite usar funciones matemáticas
+from pylab import *                     # Permite crear gráficas
 
 # VARIABLES GLOBALES
-SHEET = 'TR'        # Hoja del archivo XLSX
-FILE_TR = 'RT.xlsx'     # Variable para el fichero (TR)
+SHEET = 'TR'                            # Hoja del archivo XLSX
+FILE_TR = 'RT.xlsx'                     # Variable para el fichero (TR)
 
 # ARRAY con constantes
 ## Rango de frecuencias de interes:
@@ -54,7 +54,7 @@ def Imprimir(myArray, unidades):
     i = 0                                             # Iterador para los arrays
     for num in arrayFR:
         print(arrayFR[i], 'Hz - ', myArray[i], 's')  # Se imprime por la terminal el elemento i del array
-        i = i + 1                                     # Siguiente elemento
+        i = i + 1                                    # Siguiente elemento
 
 # Datos mostrados en una gráfica
 def Representacion(A):
