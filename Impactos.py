@@ -9,6 +9,10 @@ from TR import *                        # Se importa el TR del programa
 # VARIABLES GLOBALES
 APARTADO = 'Datos'                      # Hoja del archivo XLSX
 FILE_Impactos = 'Ruido_Impactos.xlsx'   # Variable para el fichero principal
+T = 0.5                         # Tiempo de referencia = 0.5s
+V = 23.4                        # Volumen del recinto receptor (V = largo x ancho x alto = 4.5 x 2.08 x 2.5 m^3)
+C = 0.16                        # Constante para hallar Abs, la superficie de absorción equivalente
+A0 = 10                         # Área de absorción equivalente de referencia (en viviendas = 10 m^2)
 
 # ARRAY con constantes
 ## Rango de frecuencias de interes:
@@ -28,6 +32,10 @@ LpRC_F1 = []             # Array para los resultados del nivel de ruido de impac
 LpRC_F2 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 2
 LpRC_F3 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 3
 LpRC_F4 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 4
+Ln_F1 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 1
+Ln_F2 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 2
+Ln_F3 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 3
+Ln_F4 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 4
 
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-2
@@ -68,6 +76,16 @@ def LCorregido(A, B, myArray):
             corregido_mayor = (10*math.log(10**(A[i]/10)-10**(B[i]/10),10))  
             myArray.append(round(corregido_mayor,1))
             i = i + 1
+
+# Cálculo del nivel acústica normalizado de ruido de impactos para cada banda de frecuencia, Ln':
+# A representa el Li, nivel de presión acustica de ruido de impactos
+def Calcular_Ln(A, TR, myArray):
+    i = 0
+    for num in A:
+        Abs = (C * V)/TR[i]                           # Cálculo de la superficie de absorción equivalente
+        Ln = (A[i]) + 10*math.log(Abs/A0,(10))
+        i = i + 1
+        myArray.append(round(Ln,1))
 
 # Se preparan los resultados para imprimirlos por pantalla
 def Valores(myArray, unidades):
@@ -158,3 +176,37 @@ if __name__ == "__main__":
     print('--------------------------------------')
     LCorregido(L_Impacto_F4, LpRF4, LpRC_F4)
     Valores(LpRC_F4, 'dB')
+
+    print()
+    print('Tiempo de Reverberacion de la HABITACIÓN RECEPTORA')
+    print('----------------------------------------------------')
+    print('Frecuencia | TR')
+    print('----------------------------------------------------')
+    Calcular_TR(6, 26, 12, 15, TR_F1)
+    Calcular_TR(6, 26, 19, 22, TR_F2)
+    TR_Habitación(TR_F1, TR_F2, TR)
+    Imprimir(TR, 's')
+
+    print()
+    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 1 DE LA FUENTE')
+    print('-----------------------------------------------------------------')
+    Calcular_Ln(LpRC_F1, TR, Ln_F1)
+    Valores(Ln_F1, 'dB')
+
+    print()
+    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 2 DE LA FUENTE')
+    print('-----------------------------------------------------------------')
+    Calcular_Ln(LpRC_F2, TR, Ln_F2)
+    Valores(Ln_F2, 'dB')
+
+    print()
+    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 3 DE LA FUENTE')
+    print('-----------------------------------------------------------------')
+    Calcular_Ln(LpRC_F3, TR, Ln_F3)
+    Valores(Ln_F3, 'dB')
+
+    print()
+    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 4 DE LA FUENTE')
+    print('-----------------------------------------------------------------')
+    Calcular_Ln(LpRC_F4, TR, Ln_F4)
+    Valores(Ln_F4, 'dB')
