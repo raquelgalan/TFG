@@ -12,7 +12,6 @@ FILE_Impactos = 'Ruido_Impactos.xlsx'   # Variable para el fichero principal
 T = 0.5                         # Tiempo de referencia = 0.5s
 V = 23.4                        # Volumen del recinto receptor (V = largo x ancho x alto = 4.5 x 2.08 x 2.5 m^3)
 C = 0.16                        # Constante para hallar Abs, la superficie de absorción equivalente
-A0 = 10                         # Área de absorción equivalente de referencia (en viviendas = 10 m^2)
 
 # ARRAY con constantes
 ## Rango de frecuencias de interes:
@@ -32,11 +31,11 @@ LpRC_F1 = []             # Array para los resultados del nivel de ruido de impac
 LpRC_F2 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 2
 LpRC_F3 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 3
 LpRC_F4 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 4
-Ln_F1 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 1
-Ln_F2 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 2
-Ln_F3 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 3
-Ln_F4 = []               # Array para los resultados del nivel de presión acústica normalizado en la posición 4
-
+LnT_F1 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 1
+LnT_F2 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 2
+LnT_F3 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 3
+LnT_F4 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 4
+LnT = []                 # Array para los resultados del nivel de presión acústica estandarizado de todas las posiciones
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-2
 # Cálculo del promedio de los niveles de ruido de impacto con posiciones de micrófono
@@ -77,15 +76,25 @@ def LCorregido(A, B, myArray):
             myArray.append(round(corregido_mayor,1))
             i = i + 1
 
-# Cálculo del nivel acústica normalizado de ruido de impactos para cada banda de frecuencia, Ln':
+# Cálculo del nivel de preión acústica estandarizado de ruido de impactos para cada banda de frecuencia, LnT':
 # A representa el Li, nivel de presión acustica de ruido de impactos
-def Calcular_Ln(A, TR, myArray):
+def Calcular_LnT(A, TR, myArray):
     i = 0
     for num in A:
-        Abs = (C * V)/TR[i]                           # Cálculo de la superficie de absorción equivalente
-        Ln = (A[i]) + 10*math.log(Abs/A0,(10))
+        LnT = (A[i]) - 10*math.log(TR[i]/T,(10))
         i = i + 1
-        myArray.append(round(Ln,1))
+        myArray.append(round(LnT,1))
+
+# Cálculo del sumatorio de las magnitudes en función de la posición de altavoz:
+# donde A, B, C y D son los resultados por cada posición de altavoz respectivamente para cada banda de frecuencias.
+def Sumatorio(A, B, C, D, myArray):
+    i = 0
+    for num in A:
+        sum = 10**(A[i]/10) + 10**(B[i]/10) + 10**(C[i]/10) + 10**(D[i]/10)
+        X = 10*math.log(sum/4,(10))                # Se divide entre 2, que son el número de posiciones de altavoz
+        i = i + 1
+        myArray.append(round(X,1))
+
 
 # Se preparan los resultados para imprimirlos por pantalla
 def Valores(myArray, unidades):
@@ -122,25 +131,25 @@ if __name__ == "__main__":
     Valores(L_Impacto_F4, 'dB')
 
     print()
-    print('RUIDO DE FONDO EN HABITACIÓN SUPERIOR | POSICIÓN 1 DE LA FUENTE')
+    print('RUIDO DE FONDO EN HABITACIÓN | POSICIÓN 1 DE LA FUENTE')
     print('-----------------------------------------------------------------')
     Calcular_L(8, 28, 7, 8, 2, LpRF1)
     Valores(LpRF1, 'dB')
 
     print()
-    print('RUIDO DE FONDO EN HABITACIÓN SUPERIOR | POSICIÓN 2 DE LA FUENTE')
+    print('RUIDO DE FONDO EN HABITACIÓN | POSICIÓN 2 DE LA FUENTE')
     print('-----------------------------------------------------------------')
     Calcular_L(8, 28, 10, 11, 2, LpRF2)
     Valores(LpRF2, 'dB')
 
     print()
-    print('RUIDO DE FONDO EN HABITACIÓN SUPERIOR | POSICIÓN 3 DE LA FUENTE')
+    print('RUIDO DE FONDO EN HABITACIÓN | POSICIÓN 3 DE LA FUENTE')
     print('-----------------------------------------------------------------')
     Calcular_L(8, 28, 13, 14, 2, LpRF3)
     Valores(LpRF3, 'dB')
 
     print()
-    print('RUIDO DE FONDO EN HABITACIÓN SUPERIOR | POSICIÓN 4 DE LA FUENTE')
+    print('RUIDO DE FONDO EN HABITACIÓN | POSICIÓN 4 DE LA FUENTE')
     print('-----------------------------------------------------------------')
     Calcular_L(8, 28, 16, 17, 2, LpRF4)
     Valores(LpRF4, 'dB')
@@ -188,25 +197,31 @@ if __name__ == "__main__":
     Imprimir(TR, 's')
 
     print()
-    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 1 DE LA FUENTE')
+    print('NIVEL DE PRESIÓN ACÚSTICA ESTANDARIZADO | POSICIÓN 1 DE LA FUENTE')
     print('-----------------------------------------------------------------')
-    Calcular_Ln(LpRC_F1, TR, Ln_F1)
-    Valores(Ln_F1, 'dB')
+    Calcular_LnT(LpRC_F1, TR, LnT_F1)
+    Valores(LnT_F1, 'dB')
 
     print()
-    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 2 DE LA FUENTE')
+    print('NIVEL DE PRESIÓN ACÚSTICA ESTANDARIZADO | POSICIÓN 2 DE LA FUENTE')
     print('-----------------------------------------------------------------')
-    Calcular_Ln(LpRC_F2, TR, Ln_F2)
-    Valores(Ln_F2, 'dB')
+    Calcular_LnT(LpRC_F2, TR, LnT_F2)
+    Valores(LnT_F2, 'dB')
 
     print()
-    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 3 DE LA FUENTE')
+    print('NIVEL DE PRESIÓN ACÚSTICA ESTANDARIZADO | POSICIÓN 3 DE LA FUENTE')
     print('-----------------------------------------------------------------')
-    Calcular_Ln(LpRC_F3, TR, Ln_F3)
-    Valores(Ln_F3, 'dB')
+    Calcular_LnT(LpRC_F3, TR, LnT_F3)
+    Valores(LnT_F3, 'dB')
 
     print()
-    print('NIVEL DE PRESIÓN ACÚSTICA NORMALIZADO | POSICIÓN 4 DE LA FUENTE')
+    print('NIVEL DE PRESIÓN ACÚSTICA ESTANDARIZADO | POSICIÓN 4 DE LA FUENTE')
     print('-----------------------------------------------------------------')
-    Calcular_Ln(LpRC_F4, TR, Ln_F4)
-    Valores(Ln_F4, 'dB')
+    Calcular_LnT(LpRC_F4, TR, LnT_F4)
+    Valores(LnT_F4, 'dB')
+
+    print()
+    print('NIVEL DE PRESIÓN ACÚSTICA ESTANDARIZADO PROMEDIADO')
+    print('--------------------------')
+    Sumatorio(LnT_F1, LnT_F2, LnT_F3, LnT_F4, LnT)
+    Valores(LnT, 'dB')
