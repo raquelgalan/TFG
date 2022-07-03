@@ -9,9 +9,8 @@ from TR import *                        # Se importa el TR del programa
 # VARIABLES GLOBALES
 APARTADO = 'Datos'                      # Hoja del archivo XLSX
 FILE_Impactos = 'Ruido_Impactos.xlsx'   # Variable para el fichero principal
-T = 0.5                         # Tiempo de referencia = 0.5s
-V = 23.4                        # Volumen del recinto receptor (V = largo x ancho x alto = 4.5 x 2.08 x 2.5 m^3)
-C = 0.16                        # Constante para hallar Abs, la superficie de absorción equivalente
+T = 0.5                                 # Tiempo de referencia = 0.5s
+V = 23.4                                # Volumen del recinto receptor (V = largo x ancho x alto = 4.5 x 2.08 x 2.5 m^3)
 
 # ARRAY con constantes
 ## Rango de frecuencias de interes:
@@ -102,6 +101,18 @@ def Valores(myArray, unidades):
     for num in arrayFR:
         print(arrayFR[i], 'Hz - ', myArray[i], 'dB')  # Se imprime por la terminal el elemento i del array
         i = i + 1                                     # Siguiente elemento
+
+# Datos mostrados en una gráfica
+def Grafica(A, B):
+    title(A)
+    xlabel('Frecuencia [Hz]')
+    ylabel('Niveles [dB]')
+    ylim(0, 110)
+    legend((B),
+    prop = {'size': 10}, bbox_to_anchor=(1.05, 1.0), loc='best')
+    grid()
+
+    
 
 # Se imprimen todos los datos
 if __name__ == "__main__":
@@ -225,3 +236,10 @@ if __name__ == "__main__":
     print('--------------------------')
     Sumatorio(LnT_F1, LnT_F2, LnT_F3, LnT_F4, LnT)
     Valores(LnT, 'dB')
+
+    figure('Niveles de presión acústica estandarizado')
+    plot(FR, LnT_F1, 'co-', LnT_F2, 'bo-', LnT_F3, 'm*-', LnT_F4, 'ks-', LnT, 'ys-')
+    Grafica('Niveles de presión acústica estandarizado',
+    ('LnT_F1','LnT_F2','LnT_F3','LnT_F4','LnT'))
+
+    show()
