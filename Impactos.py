@@ -17,19 +17,19 @@ V = 23.4                                # Volumen del recinto receptor (V = larg
 arrayFR = [50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000]
 
 # Arrays vacíos
-L_Impacto_F1 = []        # Array para los resultados del nivel de ruido de impacto en recepción de la fuente en la posición 1
-L_Impacto_F2 = []        # Array para los resultados del nivel de ruido de impacto en recepción de la fuente en la posición 2
-L_Impacto_F3 = []        # Array para los resultados del nivel de ruido de impacto en recepción de la fuente en la posición 3
-L_Impacto_F4 = []        # Array para los resultados del nivel de ruido de impacto en recepción de la fuente en la posición 4
+L_Impactos_F1 = []        # Array para los resultados del nivel de ruido de impactos en recepción de la fuente en la posición 1
+L_Impactos_F2 = []        # Array para los resultados del nivel de ruido de impactos en recepción de la fuente en la posición 2
+L_Impactos_F3 = []        # Array para los resultados del nivel de ruido de impactos en recepción de la fuente en la posición 3
+L_Impactos_F4 = []        # Array para los resultados del nivel de ruido de impactos en recepción de la fuente en la posición 4
 TR = []                  # Array para los resultados del tiempo de reverberación en recepción
 LpRF1 = []               # Array para los resultados del nivel de ruido de fondo en la posición 1
 LpRF2 = []               # Array para los resultados del nivel de ruido de fondo en la posición 2
 LpRF3 = []               # Array para los resultados del nivel de ruido de fondo en la posición 3
 LpRF4 = []               # Array para los resultados del nivel de ruido de fondo en la posición 4
-LpRC_F1 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 1
-LpRC_F2 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 2
-LpRC_F3 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 3
-LpRC_F4 = []             # Array para los resultados del nivel de ruido de impacto corregido en la posición 4
+LpRC_F1 = []             # Array para los resultados del nivel de ruido de impactos corregido en la posición 1
+LpRC_F2 = []             # Array para los resultados del nivel de ruido de impactos corregido en la posición 2
+LpRC_F3 = []             # Array para los resultados del nivel de ruido de impactos corregido en la posición 3
+LpRC_F4 = []             # Array para los resultados del nivel de ruido de impactos corregido en la posición 4
 LnT_F1 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 1
 LnT_F2 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 2
 LnT_F3 = []              # Array para los resultados del nivel de presión acústica estandarizado en la posición 3
@@ -37,7 +37,7 @@ LnT_F4 = []              # Array para los resultados del nivel de presión acús
 LnT = []                 # Array para los resultados del nivel de presión acústica estandarizado de todas las posiciones
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-2
-# Cálculo del promedio de los niveles de ruido de impacto con posiciones de micrófono
+# Cálculo del promedio de los niveles de ruido de impactos con posiciones de micrófono
 # en cada banda de frecuencia, Lp, donde A: min_row; B: max_row; C: min_col; D: max_col; n: posiciones de micrófono
 
 def Calcular_L(A, B, C, D, n, myArray):
@@ -94,7 +94,6 @@ def Sumatorio(A, B, C, D, myArray):
         i = i + 1
         myArray.append(round(X,1))
 
-
 # Se preparan los resultados para imprimirlos por pantalla
 def Valores(myArray, unidades):
     i = 0                                             # Se inicializa el iterador de los arrays
@@ -103,7 +102,7 @@ def Valores(myArray, unidades):
         i = i + 1                                     # Siguiente elemento
 
 # Datos mostrados en una gráfica
-def Grafica(A, B):
+def Representacion_Nivel(A, B):
     title(A)
     xlabel('Frecuencia [Hz]')
     ylabel('Niveles [dB]')
@@ -112,34 +111,32 @@ def Grafica(A, B):
     prop = {'size': 10}, bbox_to_anchor=(1.05, 1.0), loc='best')
     grid()
 
-    
-
 # Se imprimen todos los datos
 if __name__ == "__main__":
 
     print()
     print('L | MÁQUINA DE IMPACTOS | POSICIÓN 1 DE LA FUENTE')
     print('---------------------------------------------------')
-    Calcular_L(33, 53, 7, 8, 2, L_Impacto_F1)
-    Valores(L_Impacto_F1, 'dB')
+    Calcular_L(33, 53, 7, 8, 2, L_Impactos_F1)
+    Valores(L_Impactos_F1, 'dB')
 
     print()
     print('L | MÁQUINA DE IMPACTOS | POSICIÓN 2 DE LA FUENTE')
     print('---------------------------------------------------')
-    Calcular_L(33, 53, 9, 10, 2, L_Impacto_F2)
-    Valores(L_Impacto_F2, 'dB')
+    Calcular_L(33, 53, 9, 10, 2, L_Impactos_F2)
+    Valores(L_Impactos_F2, 'dB')
 
     print()
     print('L | MÁQUINA DE IMPACTOS | POSICIÓN 3 DE LA FUENTE')
     print('---------------------------------------------------')
-    Calcular_L(33, 53, 11, 12, 2, L_Impacto_F3)
-    Valores(L_Impacto_F3, 'dB')
+    Calcular_L(33, 53, 11, 12, 2, L_Impactos_F3)
+    Valores(L_Impactos_F3, 'dB')
 
     print()
     print('L | MÁQUINA DE IMPACTOS | POSICIÓN 4 DE LA FUENTE')
     print('---------------------------------------------------')
-    Calcular_L(33, 53, 13, 14, 2, L_Impacto_F4)
-    Valores(L_Impacto_F4, 'dB')
+    Calcular_L(33, 53, 13, 14, 2, L_Impactos_F4)
+    Valores(L_Impactos_F4, 'dB')
 
     print()
     print('RUIDO DE FONDO EN HABITACIÓN | POSICIÓN 1 DE LA FUENTE')
@@ -170,7 +167,7 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('-------------------------------------')
-    LCorregido(L_Impacto_F1, LpRF1, LpRC_F1)
+    LCorregido(L_Impactos_F1, LpRF1, LpRC_F1)
     Valores(LpRC_F1, 'dB')
 
     print()
@@ -178,7 +175,7 @@ if __name__ == "__main__":
     print('-------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('--------------------------------------')
-    LCorregido(L_Impacto_F2, LpRF2, LpRC_F2)
+    LCorregido(L_Impactos_F2, LpRF2, LpRC_F2)
     Valores(LpRC_F2, 'dB')
 
     print()
@@ -186,7 +183,7 @@ if __name__ == "__main__":
     print('-------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('--------------------------------------')
-    LCorregido(L_Impacto_F3, LpRF3, LpRC_F3)
+    LCorregido(L_Impactos_F3, LpRF3, LpRC_F3)
     Valores(LpRC_F3, 'dB')
 
     print()
@@ -194,7 +191,7 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Habitación')
     print('--------------------------------------')
-    LCorregido(L_Impacto_F4, LpRF4, LpRC_F4)
+    LCorregido(L_Impactos_F4, LpRF4, LpRC_F4)
     Valores(LpRC_F4, 'dB')
 
     print()
@@ -237,9 +234,18 @@ if __name__ == "__main__":
     Sumatorio(LnT_F1, LnT_F2, LnT_F3, LnT_F4, LnT)
     Valores(LnT, 'dB')
 
-    figure('Niveles de presión acústica estandarizado')
-    plot(FR, LnT_F1, 'co-', LnT_F2, 'bo-', LnT_F3, 'm*-', LnT_F4, 'ks-', LnT, 'ys-')
-    Grafica('Niveles de presión acústica estandarizado',
-    ('LnT_F1','LnT_F2','LnT_F3','LnT_F4','LnT'))
+    #REPRESENTACIÓN DE LpRC'
+    figure('Niveles de presión acústica de ruido de impactos corregido y estandarizado')
+    subplot(3,1,1)
+    plot(FR, LpRC_F1, 'co-', LpRC_F2, 'bo-', LpRC_F3, 'm*-', LpRC_F4, 'ks-')            # Genera el gráfico
+    Representacion_Nivel('Niveles de presión acústica de ruido de impactos corregido',
+    ('LpRC_F1', 'LpRC_F2', 'LpRC_F3', 'LpRC_F4'))
 
+    #REPRESENTACIÓN DE LnT'
+    subplot(3,1,3)
+    plot(FR, LnT_F1, 'co-', LnT_F2, 'bo-', LnT_F3, 'm*-', LnT_F4, 'ks-', LnT, 'ys-')    # Genera el gráfico
+    Representacion_Nivel('Niveles de presión acústica estandarizado',
+    ('LnT_F1', 'LnT_F2', 'LnT_F3', 'LnT_F4', 'LnT'))
+
+    tight_layout()                                                                      # Ajusta la leyenda
     show()
