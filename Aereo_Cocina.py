@@ -228,16 +228,18 @@ if __name__ == "__main__":
     Resultados(R, 'dB')
 
     #REPRESENTACIÓN DE DnT
-    figure('DnT Cocina')
-    plot(FR, DnT, 'ro-')        # Genera el gráfico
-    Representacion_Nivel('Diferencia estandarizada', ('DnT'))
+    figure("DnT y R' de la Cocina")
+    subplot(3,1,1)
+    plot(FR, DnT_F1, 'co-', DnT_F2, 'bo-', DnT, 'm*-')        # Genera el gráfico
+    Representacion_Nivel('Diferencia estandarizada',
+    ('DnT_F1', 'DnT_F2', 'DnT'))
 
 
-    #REPRESENTACIÓN DE R
-    figure("R' Cocina")
-    plot(FR, R, 'ro-')          # Genera el gráfico
-    Representacion_Nivel('Índice de reducción sonora aparente', ("R'"))
+    #REPRESENTACIÓN DE R'
+    subplot(3,1,3)
+    plot(FR, R_F1, 'co-', R_F2, 'bo-', R, 'm*-')              # Genera el gráfico
+    Representacion_Nivel('Índice de reducción sonora aparente',
+    ('R_F1', 'R_F2', "R'"))
 
-
-    tight_layout()              # Permite ajustar la leyenda del gráfico
+    tight_layout()                                              # Ajusta la leyenda
     show()

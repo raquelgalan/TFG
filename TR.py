@@ -57,13 +57,13 @@ def Imprimir(myArray, unidades):
         i = i + 1                                    # Siguiente elemento
 
 # Datos mostrados en una gráfica
-def Representacion(A):
+def Representacion(A, B):
     title(A)
     xlabel('Frecuencia [Hz]')
     ylabel('Tiempo[s]')
     ylim(0, 1.5)
-    legend(('TR20'),
-    loc='upper right', facecolor="w", prop = {'size': 15})
+    legend((B),
+    prop = {'size': 10}, loc='best')
     grid()
 
 
@@ -98,7 +98,10 @@ if __name__ == "__main__":
 
     #REPRESENTACIÓN DEL TR
     figure('TR20')
-    plot(FR, TR, 'ro-')        # Genera el gráfico
-    Representacion('Tiempo de reverberación en la sala receptora')
+    subplot(1,1,1)
+    plot(FR, TR_F1, 'co-', TR_F2, 'bo-', TR, 'm*-')        # Genera el gráfico
+    Representacion('Tiempo de reverberación en la sala receptora',
+    ('TR_F1', 'TR_F2', 'TR'))
 
+    #tight_layout()                                          # Ajusta la leyenda
     show()
