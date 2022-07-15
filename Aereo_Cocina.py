@@ -23,16 +23,16 @@ LpR_Cocina_F1 = []           # Array para los resultados del nivel de presión e
 LpR_Cocina_F2 = []           # Array para los resultados del nivel de presión en recepción
 LpRC_Cocina_F1 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
 LpRC_Cocina_F2 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
-LpRF = []                    # Array para los resultados del nivel de presión del ruido de fondo
+LpRF_Cocina = []                    # Array para los resultados del nivel de presión del ruido de fondo
 LpE_Cocina_F1 = []           # Array para los resultados del nivel de presión en emisión de la fuente en la posición 1
 LpE_Cocina_F2 = []           # Array para los resultados del nivel de presión en emisión de la fuente en posición 2
 TR = []                      # Array para los resultados del tiempo de reverberación en recepción
-DnT_F1 = []                  # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
-DnT_F2 = []                  # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
-DnT = []                     # Array para los resultados del nivel de diferencia normalizada global estandarizada
-R_F1 = []                    # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
-R_F2 = []                    # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
-R = []                       # Array para los resultados del índice de reducción sonora aparente global, R'
+DnT_F1_Cocina = []           # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
+DnT_F2_Cocina = []           # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
+DnT_Cocina = []              # Array para los resultados del nivel de diferencia normalizada global estandarizada
+R_F1_Cocina = []             # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
+R_F2_Cocina = []             # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
+R_Cocina = []                # Array para los resultados del índice de reducción sonora aparente global, R'
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-1
 # Cálculo del promedio de posiciones de micrófono para cada banda de frecuencia, Lp, donde
@@ -142,15 +142,15 @@ if __name__ == "__main__":
     print()
     print('RUIDO DE FONDO EN COCINA')
     print('--------------------------')
-    Calcular_Lp(139, 159, 6, 6, 1, LpRF)
-    Resultados(LpRF, 'dB')
+    Calcular_Lp(139, 159, 6, 6, 1, LpRF_Cocina)
+    Resultados(LpRF_Cocina, 'dB')
 
     print()
     print('NIVELES CORREGIDOS EN RECEPCIÓN - COCINA - FUENTE 1')
     print('-----------------------------------------------------')
     print('Frecuencia | Lp Corregido Cocina')
     print('-----------------------------------------------------')
-    LpCorregido(LpR_Cocina_F1, LpRF, LpRC_Cocina_F1)
+    LpCorregido(LpR_Cocina_F1, LpRF_Cocina, LpRC_Cocina_F1)
     Resultados(LpRC_Cocina_F1, 'dB')
 
     print()
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     print('-----------------------------------------------------')
     print('Frecuencia | Lp Corregido Cocina')
     print('-----------------------------------------------------')
-    LpCorregido(LpR_Cocina_F2, LpRF, LpRC_Cocina_F2)
+    LpCorregido(LpR_Cocina_F2, LpRF_Cocina, LpRC_Cocina_F2)
     Resultados(LpRC_Cocina_F2, 'dB')
 
     print()
@@ -192,54 +192,53 @@ if __name__ == "__main__":
     print('-----------------------------------------')
     print('Frecuencia | DnT1 Cocina')
     print('-----------------------------------------')
-    Diferencia_Nivel(LpE_Cocina_F1, LpRC_Cocina_F1,TR, DnT_F1)
-    Resultados(DnT_F1, 'dB')
+    Diferencia_Nivel(LpE_Cocina_F1, LpRC_Cocina_F1,TR, DnT_F1_Cocina)
+    Resultados(DnT_F1_Cocina, 'dB')
 
     print()
     print('DIFERENCIA DE NIVEL - COCINA - FUENTE 2')
     print('-----------------------------------------')
     print('Frecuencia | DnT2 Cocina')
     print('-----------------------------------------')
-    Diferencia_Nivel(LpE_Cocina_F2, LpRC_Cocina_F2, TR, DnT_F2)
-    Resultados(DnT_F2, 'dB')
+    Diferencia_Nivel(LpE_Cocina_F2, LpRC_Cocina_F2, TR, DnT_F2_Cocina)
+    Resultados(DnT_F2_Cocina, 'dB')
 
     print()
     print('DIFERENCIA ESTANDARIZADA')
     print('--------------------------')
-    Sumatorio(DnT_F1, DnT_F2, DnT)
-    Resultados(DnT, 'dB')
+    Sumatorio(DnT_F1_Cocina, DnT_F2_Cocina, DnT_Cocina)
+    Resultados(DnT_Cocina, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE FUENTE 1')
     print('----------------------------------------------')
-    Calcular_R(LpE_Cocina_F1, LpRC_Cocina_F1, TR, R_F1)
-    Resultados(R_F1, 'dB')
+    Calcular_R(LpE_Cocina_F1, LpRC_Cocina_F1, TR, R_F1_Cocina)
+    Resultados(R_F1_Cocina, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE FUENTE 2')
     print('----------------------------------------------')
-    Calcular_R(LpE_Cocina_F2, LpRC_Cocina_F2, TR, R_F2)
-    Resultados(R_F2, 'dB')
+    Calcular_R(LpE_Cocina_F2, LpRC_Cocina_F2, TR, R_F2_Cocina)
+    Resultados(R_F2_Cocina, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE')
     print('-------------------------------------')
-    Sumatorio(R_F1, R_F2, R)
-    Resultados(R, 'dB')
+    Sumatorio(R_F1_Cocina, R_F2_Cocina, R_Cocina)
+    Resultados(R_Cocina, 'dB')
 
     #REPRESENTACIÓN DE DnT
-    figure("DnT y R' de la Cocina")
-    subplot(3,1,1)
-    plot(FR, DnT_F1, 'co-', DnT_F2, 'bo-', DnT, 'm*-')        # Genera el gráfico
+    figure("DnT de la Cocina")
+    plot(FR, DnT_F1_Cocina, 'co-', DnT_F2_Cocina, 'bo-', DnT_Cocina, 'm*-')        # Genera el gráfico
     Representacion_Nivel('Diferencia estandarizada',
-    ('DnT_F1', 'DnT_F2', 'DnT'))
+    ('DnT_F1_Cocina', 'DnT_F2_Cocina', 'DnT_Cocina'))
 
 
     #REPRESENTACIÓN DE R'
-    subplot(3,1,3)
-    plot(FR, R_F1, 'co-', R_F2, 'bo-', R, 'm*-')              # Genera el gráfico
+    figure(" R' de la Cocina")
+    plot(FR, R_F1_Cocina, 'co-', R_F2_Cocina, 'bo-', R_Cocina, 'm*-')              # Genera el gráfico
     Representacion_Nivel('Índice de reducción sonora aparente',
-    ('R_F1', 'R_F2', "R'"))
+    ('R_F1_Cocina', 'R_F2_Cocina', "R'_Cocina"))
 
     tight_layout()                                              # Ajusta la leyenda
     show()

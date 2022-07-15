@@ -23,16 +23,16 @@ LpR_Inf_F1 = []           # Array para los resultados del nivel de presión en r
 LpR_Inf_F2 = []           # Array para los resultados del nivel de presión en recepción
 LpRC_Inf_F1 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
 LpRC_Inf_F2 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
-LpRF = []                 # Array para los resultados del nivel de presión del ruido de fondo
+LpRF_Inf = []             # Array para los resultados del nivel de presión del ruido de fondo
 LpE_Inf_F1 = []           # Array para los resultados del nivel de presión en emisión de la fuente en la posición 1
 LpE_Inf_F2 = []           # Array para los resultados del nivel de presión en emisión de la fuente en posición 2
 TR = []                   # Array para los resultados del tiempo de reverberación en recepción
-DnT_F1 = []               # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
-DnT_F2 = []               # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
-DnT = []                  # Array para los resultados del nivel de diferencia normalizada global estandarizada
-R_F1 = []                 # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
-R_F2 = []                 # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
-R = []                    # Array para los resultados del índice de reducción sonora aparente global, R'
+DnT_F1_Inf = []           # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
+DnT_F2_Inf = []           # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
+DnT_Inf = []              # Array para los resultados del nivel de diferencia normalizada global estandarizada
+R_F1_Inf = []             # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
+R_F2_Inf = []             # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
+R_Inf = []                # Array para los resultados del índice de reducción sonora aparente global, R'
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-1
 # Cálculo del promedio de posiciones de micrófono para cada banda de frecuencia, Lp, donde
@@ -141,15 +141,15 @@ if __name__ == "__main__":
     print()
     print('RUIDO DE FONDO EN HABITACIÓN INFERIOR')
     print('----------------------------------------')
-    Calcular_Lp(139, 159, 8, 8, 1, LpRF)
-    Resultados(LpRF, 'dB')
+    Calcular_Lp(139, 159, 8, 8, 1, LpRF_Inf)
+    Resultados(LpRF_Inf, 'dB')
 
     print()
     print('NIVELES CORREGIDOS EN RECEPCIÓN - HABITACIÓN INFERIOR - FUENTE 1')
     print('------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Hab. Inferior')
     print('------------------------------------------------------------------')
-    LpCorregido(LpR_Inf_F1, LpRF, LpRC_Inf_F1)
+    LpCorregido(LpR_Inf_F1, LpRF_Inf, LpRC_Inf_F1)
     Resultados(LpRC_Inf_F1, 'dB')
 
     print()
@@ -157,7 +157,7 @@ if __name__ == "__main__":
     print('-------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido Hab. Inferior')
     print('-------------------------------------------------------------------')
-    LpCorregido(LpR_Inf_F2, LpRF, LpRC_Inf_F2)
+    LpCorregido(LpR_Inf_F2, LpRF_Inf, LpRC_Inf_F2)
     Resultados(LpRC_Inf_F2, 'dB')
 
     print()
@@ -191,54 +191,53 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------')
     print('Frecuencia | DnT1 Hab. Inferior')
     print('------------------------------------------------------------------')
-    Diferencia_Nivel(LpE_Inf_F1, LpRC_Inf_F1, TR, DnT_F1)
-    Resultados(DnT_F1, 'dB')
+    Diferencia_Nivel(LpE_Inf_F1, LpRC_Inf_F1, TR, DnT_F1_Inf)
+    Resultados(DnT_F1_Inf, 'dB')
 
     print()
     print('DIFERENCIA DE NIVEL - HABITACIÓN INFERIOR - FUENTE 2')
     print('-------------------------------------------------------------------')
     print('Frecuencia | DnT2 Hab. Inferior')
     print('-------------------------------------------------------------------')
-    Diferencia_Nivel(LpE_Inf_F2, LpRC_Inf_F2, TR, DnT_F2)
-    Resultados(DnT_F2, 'dB')
+    Diferencia_Nivel(LpE_Inf_F2, LpRC_Inf_F2, TR, DnT_F2_Inf)
+    Resultados(DnT_F2_Inf, 'dB')
 
     print()
     print('DIFERENCIA ESTANDARIZADA')
     print('--------------------------')
-    Sumatorio(DnT_F1, DnT_F2, DnT)
-    Resultados(DnT, 'dB')
+    Sumatorio(DnT_F1_Inf, DnT_F2_Inf, DnT_Inf)
+    Resultados(DnT_Inf, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE FUENTE 1')
     print('----------------------------------------------')
-    Calcular_R(LpE_Inf_F1, LpRC_Inf_F1, TR, R_F1)
-    Resultados(R_F1, 'dB')
+    Calcular_R(LpE_Inf_F1, LpRC_Inf_F1, TR, R_F1_Inf)
+    Resultados(R_F1_Inf, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE FUENTE 2')
     print('----------------------------------------------')
-    Calcular_R(LpE_Inf_F2, LpRC_Inf_F2, TR, R_F2)
-    Resultados(R_F2, 'dB')
+    Calcular_R(LpE_Inf_F2, LpRC_Inf_F2, TR, R_F2_Inf)
+    Resultados(R_F2_Inf, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE')
     print('-------------------------------------')
-    Sumatorio(R_F1, R_F2, R)
-    Resultados(R, 'dB')
+    Sumatorio(R_F1_Inf, R_F2_Inf, R_Inf)
+    Resultados(R_Inf, 'dB')
 
     #REPRESENTACIÓN DE DnT
-    figure("DnT y R' de la  Habitación Inferior")
-    subplot(3,1,1)
-    plot(FR, DnT_F1, 'co-', DnT_F2, 'bo-', DnT, 'm*-')        # Genera el gráfico
+    figure("DnT de la  Habitación Inferior")
+    plot(FR, DnT_F1_Inf, 'co-', DnT_F2_Inf, 'bo-', DnT_Inf, 'm*-')        # Genera el gráfico
     Representacion_Nivel('Diferencia estandarizada',
-    ('DnT_F1', 'DnT_F2', 'DnT'))
+    ('DnT_F1_Inf', 'DnT_F2_Inf', 'DnT_Inf'))
 
 
     #REPRESENTACIÓN DE R'
-    subplot(3,1,3)
-    plot(FR, R_F1, 'co-', R_F2, 'bo-', R, 'm*-')               # Genera el gráfico
+    figure("R' de la  Habitación Inferior")
+    plot(FR, R_F1_Inf, 'co-', R_F2_Inf, 'bo-', R_Inf, 'm*-')               # Genera el gráfico
     Representacion_Nivel('Índice de reducción sonora aparente',
-    ('R_F1', 'R_F2', "R'"))
+    ('R_F1_Inf', 'R_F2_Inf', "R'_Inf"))
 
     tight_layout()                                             # Ajusta la leyenda
     show()

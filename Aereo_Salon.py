@@ -23,16 +23,16 @@ LpR_Salon_F1 = []           # Array para los resultados del nivel de presión en
 LpR_Salon_F2 = []           # Array para los resultados del nivel de presión en recepción
 LpRC_Salon_F1 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
 LpRC_Salon_F2 = []          # Array para los resultados del nivel de presión en recepción corregido el RF
-LpRF = []                   # Array para los resultados del nivel de presión del ruido de fondo
+LpRF_Salon = []             # Array para los resultados del nivel de presión del ruido de fondo
 LpE_Salon_F1 = []           # Array para los resultados del nivel de presión en emisión de la fuente en la posición 1
 LpE_Salon_F2 = []           # Array para los resultados del nivel de presión en emisión de la fuente en posición 2
 TR = []                     # Array para los resultados del tiempo de reverberación en recepción
-DnT_F1 = []                 # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
-DnT_F2 = []                 # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
-DnT = []                    # Array para los resultados del nivel de diferencia normalizada global estandarizada
-R_F1 = []                   # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
-R_F2 = []                   # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
-R = []                      # Array para los resultados del índice de reducción sonora aparente global, R'
+DnT_F1_Salon = []           # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 1
+DnT_F2_Salon = []           # Array para los resultados del nivel de diferencia normalizada de la fuente en la posición 2
+DnT_Salon = []              # Array para los resultados del nivel de diferencia normalizada global estandarizada
+R_F1_Salon = []             # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 1
+R_F2_Salon = []             # Array para los resultados del índice de reducción sonora aparente de la fuente en la posición 2
+R_Salon = []                # Array para los resultados del índice de reducción sonora aparente global, R'
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-1
 # Cálculo del promedio de posiciones de micrófono para cada banda de frecuencia, Lp, donde
@@ -142,15 +142,15 @@ if __name__ == "__main__":
     print()
     print('RUIDO DE FONDO EN SALÓN')
     print('----------------------------------------')
-    Calcular_Lp(139, 159, 7, 7, 1, LpRF)
-    Resultados(LpRF, 'dB')
+    Calcular_Lp(139, 159, 7, 7, 1, LpRF_Salon)
+    Resultados(LpRF_Salon, 'dB')
 
     print()
     print('NIVELES CORREGIDOS EN RECEPCIÓN - SALÓN - FUENTE 1')
     print('------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido SALÓN')
     print('------------------------------------------------------------------')
-    LpCorregido(LpR_Salon_F1, LpRF, LpRC_Salon_F1)
+    LpCorregido(LpR_Salon_F1, LpRF_Salon, LpRC_Salon_F1)
     Resultados(LpRC_Salon_F1, 'dB')
 
     print()
@@ -158,7 +158,7 @@ if __name__ == "__main__":
     print('-------------------------------------------------------------------')
     print('Frecuencia | Lp Corregido SALÓN')
     print('-------------------------------------------------------------------')
-    LpCorregido(LpR_Salon_F2, LpRF, LpRC_Salon_F2)
+    LpCorregido(LpR_Salon_F2, LpRF_Salon, LpRC_Salon_F2)
     Resultados(LpRC_Salon_F2, 'dB')
 
     print()
@@ -192,54 +192,53 @@ if __name__ == "__main__":
     print('------------------------------------------------------------------')
     print('Frecuencia | DnT1 SALÓN')
     print('------------------------------------------------------------------')
-    Diferencia_Nivel(LpE_Salon_F1, LpRC_Salon_F1, TR, DnT_F1)
-    Resultados(DnT_F1, 'dB')
+    Diferencia_Nivel(LpE_Salon_F1, LpRC_Salon_F1, TR, DnT_F1_Salon)
+    Resultados(DnT_F1_Salon, 'dB')
 
     print()
     print('DIFERENCIA DE NIVEL - SALÓN - FUENTE 2')
     print('-------------------------------------------------------------------')
     print('Frecuencia | DnT2 SALÓN')
     print('-------------------------------------------------------------------')
-    Diferencia_Nivel(LpE_Salon_F2, LpRC_Salon_F2, TR, DnT_F2)
-    Resultados(DnT_F2, 'dB')
+    Diferencia_Nivel(LpE_Salon_F2, LpRC_Salon_F2, TR, DnT_F2_Salon)
+    Resultados(DnT_F2_Salon, 'dB')
 
     print()
     print('DIFERENCIA ESTANDARIZADA')
     print('--------------------------')
-    Sumatorio(DnT_F1, DnT_F2, DnT)
-    Resultados(DnT, 'dB')
+    Sumatorio(DnT_F1_Salon, DnT_F2_Salon, DnT_Salon)
+    Resultados(DnT_Salon, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE FUENTE 1')
     print('----------------------------------------------')
-    Calcular_R(LpE_Salon_F1, LpRC_Salon_F1, TR, R_F1)
-    Resultados(R_F1, 'dB')
+    Calcular_R(LpE_Salon_F1, LpRC_Salon_F1, TR, R_F1_Salon)
+    Resultados(R_F1_Salon, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE FUENTE 2')
     print('----------------------------------------------')
-    Calcular_R(LpE_Salon_F2, LpRC_Salon_F2, TR, R_F2)
-    Resultados(R_F2, 'dB')
+    Calcular_R(LpE_Salon_F2, LpRC_Salon_F2, TR, R_F2_Salon)
+    Resultados(R_F2_Salon, 'dB')
 
     print()
     print('ÍNDICE DE REDUCCIÓN SONORA APARENTE')
     print('-------------------------------------')
-    Sumatorio(R_F1, R_F2, R)
-    Resultados(R, 'dB')
+    Sumatorio(R_F1_Salon, R_F2_Salon, R_Salon)
+    Resultados(R_Salon, 'dB')
 
     #REPRESENTACIÓN DE DnT
-    figure("DnT y R' del Salón")
-    subplot(3,1,1)
-    plot(FR, DnT_F1, 'co-', DnT_F2, 'bo-', DnT, 'm*-')        # Genera el gráfico
+    figure("DnT del Salón")
+    plot(FR, DnT_F1_Salon, 'co-', DnT_F2_Salon, 'bo-', DnT_Salon, 'm*-')        # Genera el gráfico
     Representacion_Nivel('Diferencia estandarizada',
-    ('DnT_F1', 'DnT_F2', 'DnT'))
+    ('DnT_F1_Salon', 'DnT_F2_Salon', 'DnT_Salon'))
 
 
     #REPRESENTACIÓN DE R'
-    subplot(3,1,3)
-    plot(FR, R_F1, 'co-', R_F2, 'bo-', R, 'm*-')              # Genera el gráfico
+    figure("R' del Salón")
+    plot(FR, R_F1_Salon, 'co-', R_F2_Salon, 'bo-', R_Salon, 'm*-')              # Genera el gráfico
     Representacion_Nivel('Índice de reducción sonora aparente',
-    ('R_F1', 'R_F2', "R'"))
+    ('R_F1_Salon', 'R_F2_Salon', "R'_Salon"))
 
     tight_layout()                                              # Ajusta la leyenda
     show()
