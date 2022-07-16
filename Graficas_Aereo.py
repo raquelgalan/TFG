@@ -19,12 +19,13 @@ FILE  = 'Ruido_Aereo.xlsx'      # Variable para el fichero principal
 ## RANGO DE FRECUENCIAS
 FR = ['50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250', '1600', '2000','2500', '3150', '4000', '5000']
 
-DnT_F1=[]
-DnT_F2=[]
-DnT=[]
-R_F1=[]
-R_F2=[]
-R=[]
+LpRF_Receptor = []
+DnT_F1 = []
+DnT_F2 = []
+DnT = []
+R_F1 = []
+R_F2 = []
+R = []
 
 ## PROCEDIMIENTOS ESPECÍFICOS DE LA ISO 16283-1
 
@@ -68,6 +69,9 @@ if __name__ == "__main__":
     plot(FR, TR_F1, 'co-', TR_F2, 'bo-', TR, 'm*-')       # Genera el gráfico
     Representacion_TR('Tiempo de Reverberación TR20',
     ('TR_F1', 'TR_F2', 'TR'))
+
+    # Cálculos del RUIDO DE FONDO DEL RECEPTOR
+    Calcular_Lp(6, 26, 1, 1, 1, LpRF_Receptor)
 
     # Cálculos de las ESCALERAS
     Calcular_Lp(33, 53, 4, 8, 5, LpR_Escaleras_F1)
@@ -146,11 +150,11 @@ if __name__ == "__main__":
 
     #REPRESENTACIÓN DE LOS NIVELES DE RECEPCIÓN
     figure("Niveles en recepción corregidos")
-    plot(FR, LpRC_Escaleras_F1, 'bo-', LpRC_Escaleras_F1, 'bo-', LpRC_Cocina_F1, 'co-',
+    plot(FR, LpRF_Receptor, 'r*-', LpRC_Escaleras_F1, 'bo-', LpRC_Escaleras_F1, 'bo-', LpRC_Cocina_F1, 'co-',
     LpRC_Cocina_F2, 'co-', LpRC_Salon_F1, 'yo-', LpRC_Salon_F2, 'yo-', 
     LpRC_Sup_F1, 'm*-', LpRC_Sup_F1, 'm*-', LpRC_Inf_F1, 'go-', LpRC_Inf_F2, 'go-')        # Genera el gráfico
     Representacion_Nivel('Diferencia estandarizada',
-    ('LEscaleras_F1', 'LEscaleras_F2', 'LCocina_F1', 'LCocina_F2',
+    ('RFrx','LEscaleras_F1', 'LEscaleras_F2', 'LCocina_F1', 'LCocina_F2',
     'LSalon_F1', 'LSalon_F2', 'LSup_F1', 'LSup_F2', 'LInf_F1', 'LInf_F2'))
 
     #REPRESENTACIÓN DE DnT
